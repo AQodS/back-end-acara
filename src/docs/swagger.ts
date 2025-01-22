@@ -28,6 +28,16 @@ const doc = {
         identifier: "AQodS",
         password: "123456",
       },
+      RegisterRequest: {
+        fullName: "Boni Ngerkekek",
+        username: "boni",
+        email: "boni@yopmail.com",
+        password: "boni123",
+        confirmPassword: "boni123",
+      },
+      ActivationRequest: {
+        code: "abcdef",
+      },
     },
   },
 };
