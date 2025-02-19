@@ -32,8 +32,8 @@ const doc = {
         fullName: "Boni Ngerkekek",
         username: "boni",
         email: "boni@yopmail.com",
-        password: "boni123",
-        confirmPassword: "boni123",
+        password: "Boni123",
+        confirmPassword: "Boni123",
       },
       ActivationRequest: {
         code: "abcdef",

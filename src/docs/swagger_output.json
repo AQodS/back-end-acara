@@ -187,11 +187,11 @@
           },
           "password": {
             "type": "string",
-            "example": "boni123"
+            "example": "Boni123"
           },
           "confirmPassword": {
             "type": "string",
-            "example": "boni123"
+            "example": "Boni123"
           }
         },
         "xml": {
