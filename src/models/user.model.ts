@@ -70,7 +70,7 @@ UserSchema.pre("save", function (next) {
 UserSchema.post("save", async function (doc, next) {
   try {
     const user = doc;
-    console.log(`Send email to ${user.email}`);
+    console.log(`Send email to ${user.email}, `, user);
     const contentMail = await renderMailHtml("registration-success.ejs", {
       username: user.username,
       fullName: user.fullName,
