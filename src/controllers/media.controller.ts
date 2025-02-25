@@ -18,7 +18,7 @@ export default {
       response.error(res, null, "Failed upload a file");
     }
   },
-  
+
   async multiple(req: IReqUser, res: Response) {
     if (!req.files || req.files.length === 0) {
       return response.error(res, null, "Files not found");
