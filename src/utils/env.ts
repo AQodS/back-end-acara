@@ -15,3 +15,9 @@ export const EMAIL_SMTP_SERVICE_NAME: string =
   process.env.EMAIL_SMTP_SERVICE_NAME || "";
 export const CLIENT_HOST: string =
   process.env.CLIENT_HOST || "http://front-end-acara-beta.vercel.app";
+
+export const CLOUDINARY_CLOUD_NAME: string =
+  process.env.CLOUDINARY_CLOUD_NAME || "";
+export const CLOUDINARY_API_KEY: string = process.env.CLOUDINARY_API_KEY || "";
+export const CLOUDINARY_API_SECRET: string =
+  process.env.CLOUDINARY_API_SECRET || "";
