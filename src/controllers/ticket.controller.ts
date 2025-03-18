@@ -52,7 +52,7 @@ export default {
         "Success find all tickets"
       );
     } catch (error) {
-      response.error(res, error, "Failed to find all ticket");
+      response.error(res, error, "Failed to find all tickets");
     }
   },
   async findOne(req: IReqUser, res: Response) {

@@ -69,6 +69,15 @@ export default {
       data: null,
     });
   },
+  notFound(res: Response, message: string = "Not Found") {
+    res.status(404).json({
+      meta: {
+        status: 404,
+        message,
+      },
+      data: null,
+    });
+  },
   pagination(
     res: Response,
     data: any[],
