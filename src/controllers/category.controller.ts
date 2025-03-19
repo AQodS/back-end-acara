@@ -2,6 +2,7 @@ import { Response } from "express";
 import { IPaginationQuery, IReqUser } from "../utils/interfaces";
 import CategoryModel, { categoryDAO } from "../models/category.model";
 import response from "../utils/response";
+import { isValidObjectId } from "mongoose";
 
 export default {
   async create(req: IReqUser, res: Response) {
@@ -51,16 +52,21 @@ export default {
           current: page,
           total: count,
         },
-        "Success find all category"
+        "Success to find all categories"
       );
     } catch (error) {
-      response.error(res, error, "Failed find all category");
+      response.error(res, error, "Failed to find all categories");
     }
   },
 
   async findOne(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+
+      if (!isValidObjectId(id)) {
+        return response.notFound(res, "Category not found");
+      }
+
       const result = await CategoryModel.findById(id);
 
       if (!result) {
@@ -76,22 +82,32 @@ export default {
   async update(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+
+      if (!isValidObjectId(id)) {
+        return response.notFound(res, "Failed to update category");
+      }
+
       const result = await CategoryModel.findByIdAndUpdate(id, req.body, {
         new: true,
       });
       response.success(res, result, "Success update category");
     } catch (error) {
-      response.error(res, error, "Failed update category");
+      response.error(res, error, "Failed to update category");
     }
   },
 
   async remove(req: IReqUser, res: Response) {
     try {
       const { id } = req.params;
+
+      if (!isValidObjectId(id)) {
+        return response.notFound(res, "Failed to remove category");
+      }
+
       const result = await CategoryModel.findByIdAndDelete(id, { new: true });
       response.success(res, result, "Success remove category");
     } catch (error) {
-      response.error(res, error, "Failed remove category");
+      response.error(res, error, "Failed to remove category");
     }
   },
 };
