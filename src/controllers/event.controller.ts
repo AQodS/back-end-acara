@@ -51,6 +51,7 @@ export default {
         .limit(+limit)
         .skip((+page - 1) * +limit)
         .sort({ cratedAt: -1 })
+        .lean()
         .exec();
       const count = await EventModel.countDocuments(query);
 

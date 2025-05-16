@@ -3,6 +3,7 @@ import { IReqUser } from "../utils/interfaces";
 import response from "../utils/response";
 import OrderModel, { orderDAO, TypeOrder } from "../models/order.model";
 import TicketModel from "../models/ticket.model";
+import { FilterQuery } from "mongoose";
 
 export default {
   async create(req: IReqUser, res: Response) {
@@ -33,16 +34,58 @@ export default {
       response.error(res, error, "Failed to create an order");
     }
   },
+
   async findAll(req: IReqUser, res: Response) {
     try {
+      const buildQuery = (filter: any) => {
+        let query: FilterQuery<TypeOrder> = {};
+
+        if (filter.search) query.$text = { $search: filter.search };
+
+        return query;
+      };
+
+      const { limit = 10, page = 1, search } = req.query;
+
+      const query = buildQuery({
+        search,
+      });
+
+      const result = await OrderModel.find(query)
+        .limit(+limit)
+        .skip((+page - 1) * +limit)
+        .sort({ cratedAt: -1 })
+        .lean()
+        .exec();
+
+      const count = await OrderModel.countDocuments(query);
+
+      response.pagination(
+        res,
+        result,
+        {
+          current: +page,
+          total: count,
+          totalPages: Math.ceil(count / +limit),
+        },
+        "Success find all orders"
+      );
     } catch (error) {
-      response.error(res, error, "Failed to find all order");
+      response.error(res, error, "Failed to find all orders");
     }
   },
   async findOne(req: IReqUser, res: Response) {
     try {
+      const { orderId } = req.params;
+      const result = await OrderModel.findOne({
+        orderId,
+      });
+
+      if (!result) return response.notFound(res, "Order not found");
+
+      response.success(res, result, "Success find one an order");
     } catch (error) {
-      response.error(res, error, "Failed to find one order");
+      response.error(res, error, "Failed to find one an order");
     }
   },
   async findAllByMember(req: IReqUser, res: Response) {
