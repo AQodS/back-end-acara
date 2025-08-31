@@ -195,12 +195,92 @@ export default {
   },
   async pending(req: IReqUser, res: Response) {
     try {
+      const { orderId } = req.params;
+      const userid = req.user?.id;
+
+      const order = await OrderModel.findOne({
+        orderId,
+        createdBy: userid,
+      });
+
+      if (!order) return response.notFound(res, "Order not found");
+
+      if (order.status === OrderStatus.COMPLETED) {
+        return response.error(
+          res,
+          null,
+          "This order has been completed this order"
+        );
+      }
+
+      if (order.status === OrderStatus.PENDING) {
+        return response.error(
+          res,
+          null,
+          "This order currently in payment pending"
+        );
+      }
+
+      const result = await OrderModel.findOneAndUpdate(
+        {
+          orderId,
+          createdBy: userid,
+        },
+        {
+          status: OrderStatus.PENDING,
+        },
+        {
+          new: true,
+        }
+      );
+
+      response.success(res, result, "Success to pending an order");
     } catch (error) {
       response.error(res, error, "Failed to pending an order");
     }
   },
   async canceled(req: IReqUser, res: Response) {
     try {
+      const { orderId } = req.params;
+      const userid = req.user?.id;
+
+      const order = await OrderModel.findOne({
+        orderId,
+        createdBy: userid,
+      });
+
+      if (!order) return response.notFound(res, "Order not found");
+
+      if (order.status === OrderStatus.COMPLETED) {
+        return response.error(
+          res,
+          null,
+          "This order has been completed this order"
+        );
+      }
+
+      if (order.status === OrderStatus.CANCELED) {
+        return response.error(
+          res,
+          null,
+          "This order currently in payment canceled"
+        );
+      }
+
+      const result = await OrderModel.findOneAndUpdate(
+        {
+          orderId,
+          createdBy: userid,
+        },
+        {
+          status: OrderStatus.CANCELED,
+        },
+        {
+          new: true,
+        }
+      );
+
+      response.success(res, result, "Success to cancel an order");
     } catch (error) {
       response.error(res, error, "Failed to cancel an order");
     }
@@ -223,7 +303,6 @@ export default {
       }
 
       response.success(res, result, "Success remove an order");
-
     } catch (error) {
       response.error(res, error, "Failed to remove an order");
     }
