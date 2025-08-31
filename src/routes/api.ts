@@ -91,11 +91,21 @@ router.put(
   }]
   */
 );
-
 router.get(
   "/orders-history",
   [authMiddleware, aclMiddleware([ROLES.MEMBER])],
   orderController.findAllByMember
+  /*
+  #swagger.tags = ['Order']
+  #swagger.security = [{
+    "bearerAuth": ""
+  }]
+  */
+);
+router.delete(
+  "/orders/:orderId",
+  [authMiddleware, aclMiddleware([ROLES.ADMIN])],
+  orderController.remove
   /*
   #swagger.tags = ['Order']
   #swagger.security = [{
