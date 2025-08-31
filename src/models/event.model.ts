@@ -5,7 +5,7 @@ export const EVENT_MODEL_NAME = "Event";
 
 const Schema = mongoose.Schema;
 
-export const eventDAO = Yup.object({
+export const eventDTO = Yup.object({
   name: Yup.string().required(),
   startDate: Yup.string().required(),
   endDate: Yup.string().required(),
@@ -19,14 +19,16 @@ export const eventDAO = Yup.object({
   createdBy: Yup.string().required(),
   createdAt: Yup.string(),
   updateAt: Yup.string(),
-  location: Yup.object().shape({
-    region: Yup.number(),
-    coordinates: Yup.array(),
-    address: Yup.string(),
-  }).required(),
+  location: Yup.object()
+    .shape({
+      region: Yup.number(),
+      coordinates: Yup.array(),
+      address: Yup.string(),
+    })
+    .required(),
 });
 
-export type TypeEvent = Yup.InferType<typeof eventDAO>;
+export type TypeEvent = Yup.InferType<typeof eventDTO>;
 
 export interface Event extends Omit<TypeEvent, "category" | "createdBy"> {
   category: ObjectId;
@@ -92,7 +94,7 @@ const EventSchema = new Schema<Event>(
         },
         address: {
           type: Schema.Types.String,
-        }
+        },
       },
     },
   },
