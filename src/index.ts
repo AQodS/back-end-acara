@@ -11,7 +11,7 @@ async function init() {
     console.log(`Databese status: ${result}`);
 
     const app = express();
-    const PORT = 3000;
+    const PORT = 4000;
 
     app.use(cors());
     app.use(bodyParser.json());

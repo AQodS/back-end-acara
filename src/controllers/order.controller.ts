@@ -137,7 +137,7 @@ export default {
     }
   },
 
-  async complete(req: IReqUser, res: Response) {
+  async completed(req: IReqUser, res: Response) {
     try {
       const { orderId } = req.params;
       const userid = req.user?.id;
@@ -199,7 +199,7 @@ export default {
       response.error(res, error, "Failed to pending an order");
     }
   },
-  async cancel(req: IReqUser, res: Response) {
+  async canceled(req: IReqUser, res: Response) {
     try {
     } catch (error) {
       response.error(res, error, "Failed to cancel an order");
