@@ -196,11 +196,9 @@ export default {
   async pending(req: IReqUser, res: Response) {
     try {
       const { orderId } = req.params;
-      const userid = req.user?.id;
 
       const order = await OrderModel.findOne({
         orderId,
-        createdBy: userid,
       });
 
       if (!order) return response.notFound(res, "Order not found");
@@ -209,7 +207,7 @@ export default {
         return response.error(
           res,
           null,
-          "This order has been completed this order"
+          "You have been completed this order"
         );
       }
 
@@ -224,7 +222,6 @@ export default {
       const result = await OrderModel.findOneAndUpdate(
         {
           orderId,
-          createdBy: userid,
         },
         {
           status: OrderStatus.PENDING,
@@ -242,11 +239,9 @@ export default {
   async canceled(req: IReqUser, res: Response) {
     try {
       const { orderId } = req.params;
-      const userid = req.user?.id;
 
       const order = await OrderModel.findOne({
         orderId,
-        createdBy: userid,
       });
 
       if (!order) return response.notFound(res, "Order not found");
@@ -255,7 +250,7 @@ export default {
         return response.error(
           res,
           null,
-          "This order has been completed this order"
+          "You have been completed this order"
         );
       }
 
@@ -270,7 +265,6 @@ export default {
       const result = await OrderModel.findOneAndUpdate(
         {
           orderId,
-          createdBy: userid,
         },
         {
           status: OrderStatus.CANCELED,

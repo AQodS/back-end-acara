@@ -71,9 +71,14 @@ const doc = {
       CreateTicketRequest: {
         price: 1000,
         name: "Ticket name",
-        events: "67d96ad5353a8ac7f49791b9",
+        events: "event ObjectID",
         description: "Ticket description",
         quantity: 100,
+      },
+      CreateOrderRequest: {
+        events: "event ObjectID",
+        ticket: "ticket ObjectID",
+        quantity: 1,
       },
     },
   },

@@ -1687,7 +1687,7 @@
           },
           "events": {
             "type": "string",
-            "example": "67d96ad5353a8ac7f49791b9"
+            "example": "event ObjectID"
           },
           "description": {
             "type": "string",
@@ -1700,6 +1700,26 @@
         },
         "xml": {
           "name": "CreateTicketRequest"
+        }
+      },
+      "CreateOrderRequest": {
+        "type": "object",
+        "properties": {
+          "events": {
+            "type": "string",
+            "example": "event ObjectID"
+          },
+          "ticket": {
+            "type": "string",
+            "example": "ticket ObjectID"
+          },
+          "quantity": {
+            "type": "number",
+            "example": 1
+          }
+        },
+        "xml": {
+          "name": "CreateOrderRequest"
         }
       }
     }
