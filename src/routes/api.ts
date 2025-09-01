@@ -14,10 +14,50 @@ import orderController from "../controllers/order.controller";
 
 const router = express.Router();
 
-router.post("/auth/register", authController.register);
-router.post("/auth/login", authController.login);
-router.get("/auth/me", authMiddleware, authController.me);
-router.post("/auth/activation", authController.activation);
+router.post(
+  "/auth/register",
+  authController.register
+  /*
+  #swagger.tags = ['Auth']
+  #swagger.requestBody = {
+    required: true,
+    schema: {$ref: "#/components/schemas/RegisterRequest"}
+  }
+  */
+);
+router.post(
+  "/auth/login",
+  authController.login
+  /*
+  #swagger.tags = ['Auth']
+  #swagger.requestBody = {
+    required: true,
+    schema: {$ref: "#/components/schemas/LoginRequest"}
+  }
+  */
+);
+router.get(
+  "/auth/me",
+  authMiddleware,
+  authController.me
+  /*
+  #swagger.tags = ['Auth']
+  #swagger.security = [{
+    "bearerAuth": ""
+  }]
+  */
+);
+router.post(
+  "/auth/activation",
+  authController.activation
+  /*
+  #swagger.tags = ['Auth']
+  #swagger.requestBody = {
+    required: true,
+    schema: {$ref: "#/components/schemas/ActivationRequest"}
+  }
+  */
+);
 
 router.post(
   "/orders",
