@@ -58,6 +58,36 @@ router.post(
   }
   */
 );
+router.put(
+  "/auth/update-profile",
+  [authMiddleware, aclMiddleware([ROLES.MEMBER])],
+  authController.updateProfile
+  /*
+  #swagger.tags = ['Auth']
+  #swagger.security = [{
+    "bearerAuth": ""
+  }]
+  #swagger.requestBody = {
+    required: true,
+    schema: {$ref: "#/components/schemas/UpdateProfileRequest"}
+  }
+  */
+);
+router.put(
+  "/auth/update-password",
+  [authMiddleware, aclMiddleware([ROLES.MEMBER])],
+  authController.updatePassword
+  /*
+  #swagger.tags = ['Auth']
+  #swagger.security = [{
+    "bearerAuth": ""
+  }]
+  #swagger.requestBody = {
+    required: true,
+    schema: {$ref: "#/components/schemas/UpdatePasswordRequest"}
+  }
+  */
+);
 
 router.post(
   "/orders",

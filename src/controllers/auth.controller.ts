@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import UserModel, { userDTO, userLoginDTO } from "../models/user.model";
+import UserModel, {
+  userDTO,
+  userLoginDTO,
+  userUpdatePasswordDTO,
+} from "../models/user.model";
 import { encrypt } from "../utils/encryption";
 import { generateToken } from "../utils/jwt";
 import { IReqUser } from "../utils/interfaces";
@@ -97,6 +101,64 @@ export default {
       response.success(res, user, "User Successfully Activated");
     } catch (error) {
       response.error(res, error, "User is Failed Activated");
+    }
+  },
+
+  async updateProfile(req: IReqUser, res: Response) {
+    try {
+      const userId = req.user?.id;
+      const { fullName, profilePicture } = req.body;
+      const result = await UserModel.findByIdAndUpdate(
+        userId,
+        {
+          fullName,
+          profilePicture,
+        },
+        {
+          new: true,
+        }
+      );
+
+      if (!result) {
+        return response.notFound(res, "User not found");
+      }
+
+      response.success(res, result, "Success to update profile");
+    } catch (error) {
+      response.error(res, error, "Failed to update profile");
+    }
+  },
+
+  async updatePassword(req: IReqUser, res: Response) {
+    try {
+      const userId = req.user?.id;
+      const { oldPassword, password, confirmPassword } = req.body;
+
+      await userUpdatePasswordDTO.validate({
+        oldPassword,
+        password,
+        confirmPassword,
+      });
+
+      const user = await UserModel.findById(userId);
+
+      if (!user || user.password !== encrypt(oldPassword)) {
+        return response.notFound(res, "User not found");
+      }
+
+      const result = await UserModel.findByIdAndUpdate(
+        userId,
+        {
+          password: encrypt(password),
+        },
+        {
+          new: true,
+        }
+      );
+
+      response.success(res, result, "Success to update password");
+    } catch (error) {
+      response.error(res, error, "Failed to update password");
     }
   },
 };

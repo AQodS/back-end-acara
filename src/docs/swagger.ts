@@ -38,6 +38,15 @@ const doc = {
       ActivationRequest: {
         code: "abcdef",
       },
+      UpdateProfileRequest: {
+        fullName: "Boni Update",
+        profilePicture: "fileUrl",
+      },
+      UpdatePasswordRequest: {
+        oldPassword: "Lama123",
+        password: "Baru123",
+        confirmPassword: "Baru123",
+      },
       CreateCategoryRequest: {
         name: "",
         description: "",
